@@ -1,12 +1,13 @@
-# Valentine invitation – Hong Luyen 💕
+# Valentine invitation 💕
 
-A small Valentine’s invitation site with a modal and a “floating No” button.
+A small Valentine’s invitation site with a modal and a “floating No” button. And video animations gift using for valentine day.
 
 ## What’s inside
 
-- **First screen**: Modal asking “Will you be my Valentine, Hong Luyen?” with **Yes** and **No**.
+- **First screen**: Modal asking “Will you be my Valentine?” with **Yes** and **No**.
   - **No** moves to a random position when you hover or get close, so it’s hard to click.
-- **Second screen**: After clicking **Yes**, a congrats view with a celebration GIF and simple firework-style animations.
+- **Second screen**: After clicking **Yes**, a congrats view with a celebration Budu video and simple firework-style animations. (Replace to your own video here)
+- **Third screen**: a dancing view with a celebration Budu video (Replace your video here).
 
 ## How to run
 
