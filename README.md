@@ -1,0 +1,25 @@
+# Valentine invitation – Hong Luyen 💕
+
+A small Valentine’s invitation site with a modal and a “floating No” button.
+
+## What’s inside
+
+- **First screen**: Modal asking “Will you be my Valentine, Hong Luyen?” with **Yes** and **No**.
+  - **No** moves to a random position when you hover or get close, so it’s hard to click.
+- **Second screen**: After clicking **Yes**, a congrats view with a celebration GIF and simple firework-style animations.
+
+## How to run
+
+Open `index.html` in a browser (double-click or from your editor’s “Open with Live Server” / similar). No build step.
+
+```bash
+# Optional: serve with a local server (e.g. Python)
+python3 -m http.server 8080
+# Then open http://localhost:8080
+```
+
+## Stack
+
+- Plain HTML + Tailwind CSS (CDN) + vanilla JS
+- Google Fonts: **Nunito**, **Quicksand**
+- Valentine theme: pink/rose gradient, hearts, glass-style modal
