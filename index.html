@@ -130,11 +130,12 @@
         z-index: 10;
       }
       .video-wrap .video-toggle {
-        opacity: 0;
+        opacity: 1;
         transition: opacity 0.3s;
       }
-      .video-wrap:hover .video-toggle {
-        opacity: 1;
+      .video-wrap .video-toggle.hidden-toggle {
+        opacity: 0;
+        pointer-events: none;
       }
       .congrats-text {
         animation: popIn 0.5s ease forwards;
@@ -385,18 +386,44 @@
         // Toggle play/pause helper
         function setupVideoToggle(btn, vid, icon) {
           if (!btn || !vid || !icon) return;
+          var hideTimer = null;
+          var wrap = btn.closest(".video-wrap");
+
+          function showBtn() {
+            btn.classList.remove("hidden-toggle");
+            clearTimeout(hideTimer);
+            if (!vid.paused) {
+              hideTimer = setTimeout(function () {
+                btn.classList.add("hidden-toggle");
+              }, 500);
+            }
+          }
+
           btn.addEventListener("click", function () {
             if (vid.paused) {
               vid.muted = false;
               vid.play();
               icon.innerHTML = "&#9646;&#9646;";
               icon.style.marginLeft = "0";
+              hideTimer = setTimeout(function () {
+                btn.classList.add("hidden-toggle");
+              }, 500);
             } else {
               vid.pause();
               icon.innerHTML = "&#9654;";
               icon.style.marginLeft = "4px";
+              clearTimeout(hideTimer);
+              btn.classList.remove("hidden-toggle");
             }
           });
+
+          // Show on hover/tap on the video area
+          if (wrap) {
+            wrap.addEventListener("mousemove", showBtn);
+            wrap.addEventListener("touchstart", function () {
+              if (!vid.paused) showBtn();
+            });
+          }
         }
 
         const btnPlay = document.getElementById("btn-play");
