@@ -129,6 +129,13 @@
         pointer-events: none;
         z-index: 10;
       }
+      .video-wrap .video-toggle {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .video-wrap:hover .video-toggle {
+        opacity: 1;
+      }
       .congrats-text {
         animation: popIn 0.5s ease forwards;
         opacity: 0;
@@ -277,14 +284,88 @@
         Thank you for being mine, sweet Valentine 💗
       </p>
       <div
-        class="rounded-2xl overflow-hidden shadow-2xl bg-white/90 inline-block mb-6 congrats-text"
+        class="video-wrap rounded-2xl overflow-hidden shadow-2xl inline-block mb-6 congrats-text relative"
         style="animation-delay: 0.6s"
       >
-        <img
-          src="https://media1.tenor.com/m/0cNM_9li440AAAAC/dudu-giving-flowers-bubu-flowers.gif"
-          alt="Dudu giving flowers to Bubu"
-          class="w-full max-w-md block"
-        />
+        <video
+          id="valentine-video"
+          src="bubu-video-valentine-quote.mp4"
+          loop
+          muted
+          playsinline
+          class="w-full max-w-lg block rounded-2xl"
+        ></video>
+        <button
+          id="btn-play"
+          type="button"
+          class="video-toggle absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl cursor-pointer hover:bg-black/20"
+        >
+          <span
+            class="bg-white/90 rounded-full w-16 h-16 flex items-center justify-center shadow-lg"
+          >
+            <span id="btn-play-icon" class="text-rose-600 text-3xl ml-1"
+              >&#9654;</span
+            >
+          </span>
+        </button>
+      </div>
+      <button
+        id="btn-dance"
+        type="button"
+        class="btn-yes px-8 py-3 rounded-full text-white font-semibold text-lg shadow-lg congrats-text"
+        style="animation-delay: 0.8s"
+      >
+        Let's dance together 💃🕺
+      </button>
+    </div>
+
+    <!-- Dance page -->
+    <div
+      id="dance-page"
+      class="fixed inset-0 z-30 flex items-center justify-center valentine-bg"
+      style="display: none"
+    >
+      <div class="text-center">
+        <h2
+          class="font-display font-bold text-3xl sm:text-4xl text-rose-700 mb-4 congrats-text"
+        >
+          Nhảy cùng budu nào em iu 🤓
+        </h2>
+        <div
+          class="video-wrap rounded-2xl overflow-hidden shadow-2xl inline-block relative"
+        >
+          <video
+            id="dance-video"
+            src="bubu-valentine-video-dancing.mp4"
+            loop
+            muted
+            playsinline
+            class="block rounded-2xl"
+            style="max-height: 70vh"
+          ></video>
+          <button
+            id="btn-play-dance"
+            type="button"
+            class="video-toggle absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl cursor-pointer hover:bg-black/20"
+          >
+            <span
+              class="bg-white/90 rounded-full w-16 h-16 flex items-center justify-center shadow-lg"
+            >
+              <span id="btn-play-dance-icon" class="text-rose-600 text-3xl ml-1"
+                >&#9654;</span
+              >
+            </span>
+          </button>
+        </div>
+        <div class="mt-4">
+          <button
+            id="btn-back"
+            type="button"
+            class="px-6 py-2 rounded-full bg-white/80 text-rose-600 font-semibold border-2 border-rose-300 hover:bg-white cursor-pointer"
+          >
+            ← Back
+          </button>
+        </div>
       </div>
     </div>
 
@@ -300,6 +381,63 @@
         const canvas = document.getElementById("fireworks");
 
         if (!container || !btnNo || !btnYes) return;
+
+        // Toggle play/pause helper
+        function setupVideoToggle(btn, vid, icon) {
+          if (!btn || !vid || !icon) return;
+          btn.addEventListener("click", function () {
+            if (vid.paused) {
+              vid.muted = false;
+              vid.play();
+              icon.innerHTML = "&#9646;&#9646;";
+              icon.style.marginLeft = "0";
+            } else {
+              vid.pause();
+              icon.innerHTML = "&#9654;";
+              icon.style.marginLeft = "4px";
+            }
+          });
+        }
+
+        const btnPlay = document.getElementById("btn-play");
+        const video = document.getElementById("valentine-video");
+        setupVideoToggle(
+          btnPlay,
+          video,
+          document.getElementById("btn-play-icon"),
+        );
+
+        const btnPlayDance = document.getElementById("btn-play-dance");
+        const danceVideo = document.getElementById("dance-video");
+        setupVideoToggle(
+          btnPlayDance,
+          danceVideo,
+          document.getElementById("btn-play-dance-icon"),
+        );
+
+        // Dance page
+        const btnDance = document.getElementById("btn-dance");
+        const dancePage = document.getElementById("dance-page");
+        const btnBack = document.getElementById("btn-back");
+
+        if (btnDance && dancePage) {
+          btnDance.addEventListener("click", function () {
+            if (video) {
+              video.pause();
+            }
+            congratsPage.style.display = "none";
+            dancePage.style.display = "flex";
+          });
+        }
+        if (btnBack && dancePage) {
+          btnBack.addEventListener("click", function () {
+            if (danceVideo) {
+              danceVideo.pause();
+            }
+            dancePage.style.display = "none";
+            congratsPage.style.display = "block";
+          });
+        }
 
         const padding = 20;
         let isFloating = false;
